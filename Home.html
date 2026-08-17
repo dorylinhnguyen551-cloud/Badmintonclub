@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGHS Badminton Club</title>
+    <!-- Import Google Font 'Poppins' -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Tông màu Red Pastel */
+            --primary-color: #e57373;
+            --primary-hover: #ef5350;
+            --secondary-color: #ffffff;
+            --bg-light: #fdf8f8;
+            --text-color: #4a4a4a;
+            --accent-soft: #ffcdd2;
+            --card-bg: #fff5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(229, 115, 115, 0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mascot-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 3px solid var(--secondary-color);
+            background-color: #fff;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+
+        nav a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 2.5rem auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Page Display Control */
+        .page {
+            display: none;
+            background: var(--secondary-color);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+            border: 1px solid var(--accent-soft);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        /* Gallery Full-width Page */
+        #gallery.active-page {
+            display: block;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--accent-soft);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Rules Cards */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 1.5rem 0;
+        }
+
+        .rule-card {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Ranking Table */
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .ranking-table th, .ranking-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ranking-table th {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .ranking-table tr:hover {
+            background-color: var(--card-bg);
+        }
+
+        /* Video Links Section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 1.5rem;
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--accent-soft);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .video-card h4 {
+            color: var(--text-color);
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #FF0000;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .btn-youtube:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* --- GALLERY STYLES --- */
+        .gallery-header {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--accent-soft);
+        }
+
+        .full-slideshow-wrapper {
+            position: relative;
+            width: 100vw;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            background: #111;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 2.5rem;
+        }
+
+        .slideshow-container {
+            position: relative;
+            max-width: 1200px;
+            height: 520px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 600;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.7);
+        }
+
+        .slide.active-slide {
+            display: flex;
+        }
+
+        .prev-btn, .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(229, 115, 115, 0.85);
+            color: white;
+            border: none;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .prev-btn { left: 25px; }
+        .next-btn { right: 25px; }
+
+        .gallery-thumbs-section {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--accent-soft);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            padding-top: 60%;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-soft);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .gallery-item:hover, .gallery-item.active-thumb {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(229, 115, 115, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .gallery-item.active-thumb .gallery-item-content {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-width: 550px;
+        }
+
+        label {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-color);
+        }
+
+        button.btn-submit {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            align-self: flex-start;
+        }
+
+        button.btn-submit:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Details & Buttons */
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--accent-soft);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-social {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            color: #ffffff;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .btn-social:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .contact-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .slideshow-container {
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo-container">
+            <img src="https://via.placeholder.com/100?text=Mascot" alt="Club Mascot" class="mascot-avatar">
+            <span class="logo-text">GGHS Badminton Club</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+                <li><a onclick="showPage('events')" id="nav-events">Events</a></li>
+                <li><a onclick="showPage('orgs')" id="nav-orgs">Orgs</a></li>
+                <li><a onclick="showPage('news')" id="nav-news">News</a></li>
+                <li><a onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
+                <li><a onclick="showPage('form')" id="nav-form">Form</a></li>
+                <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- 1. Home Page -->
+        <div id="home" class="page active-page">
+            <h2>Basic Information</h2>
+            <p>Welcome to GGHS Badminton Club! Here is everything you need to know about badminton essentials, global rankings, and helpful tutorials.</p>
+
+            <h3 style="margin-top: 2rem;">Badminton Rules</h3>
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <strong>Scoring System:</strong> A match consists of the best of 3 games of 21 points.
+                </div>
+                <div class="rule-card">
+                    <strong>Serving Rule:</strong> Serves must be hit underhand and below waist level diagonally across the court.
+                </div>
+                <div class="rule-card">
+                    <strong>Faults:</strong> Shuttlecock touching the net/player or landing out of bounds is considered a fault.
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">BWF World Rankings (Top Players)</h3>
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Category</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Shi Yu Qi</td>
+                        <td>Men's Singles</td>
+                        <td>China</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>An Se Young</td>
+                        <td>Women's Singles</td>
+                        <td>South Korea</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Viktor Axelsen</td>
+                        <td>Men's Singles</td>
+                        <td>Denmark</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Chen Yu Fei</td>
+                        <td>Women's Singles</td>
+                        <td>China</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- PHẦN LIÊN KẾT YOUTUBE TRỰC TIẾP -->
+            <h3 style="margin-top: 2rem;">Tutorial Videos: How to Play</h3>
+            <div class="video-grid">
+                <div class="video-card">
+                    <h4>Basic Badminton for Beginners</h4>
+                    <a href="https://www.youtube.com/watch?v=1UIhKZCPMYM" target="_blank" rel="noopener noreferrer" class="btn-youtube">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        Watch on YouTube
+                    </a>
+                </div>
+                <div class="video-card">
+                    <h4>4 Corner Footwork - Step-By-Step Tutorial</h4>
+                    <a href="https://www.youtube.com/watch?v=fBa08o5GEqw" target="_blank" rel="noopener noreferrer" class="btn-youtube">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        Watch on YouTube
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Events Page -->
+        <div id="events" class="page">
+            <h2>Events</h2>
+            <p>Upcoming internal tournaments and friendly matches. Stay tuned and don't miss your chance to play!</p>
+        </div>
+
+        <!-- 3. Organizations Page -->
+        <div id="orgs" class="page">
+            <h2>Organizations (Orgs)</h2>
+            <p>Information about our Executive Board, Technical Team, and supporting partners.</p>
+        </div>
+
+        <!-- 4. News Page -->
+        <div id="news" class="page">
+            <h2>News</h2>
+            <p>Latest updates on club activities, tournament results, and training schedules.</p>
+        </div>
+
+        <!-- 5. Gallery Page (Full-Width Showcase) -->
+        <div id="gallery" class="page">
+            <div class="gallery-header">
+                <h2>Photo Gallery</h2>
+                <p>Explore our club memories, tournament highlights, and training sessions.</p>
+            </div>
+
+            <!-- Big Full-Width Slideshow -->
+            <div class="full-slideshow-wrapper">
+                <div class="slideshow-container">
+                    <button class="prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+                    <button class="next-btn" onclick="changeSlide(1)">&#10095;</button>
+
+                    <div class="slide active-slide" style="background-color: #2c3e50;">Photo 1 (Large Showcase)</div>
+                    <div class="slide" style="background-color: #34495e;">Photo 2 (Large Showcase)</div>
+                    <div class="slide" style="background-color: #7f8c8d;">Photo 3 (Large Showcase)</div>
+                    <div class="slide" style="background-color: #16a085;">Photo 4 (Large Showcase)</div>
+                    <div class="slide" style="background-color: #27ae60;">Photo 5 (Large Showcase)</div>
+                    <div class="slide" style="background-color: #2980b9;">Photo 6 (Large Showcase)</div>
+                </div>
+            </div>
+
+            <!-- Thumbnails Section -->
+            <div class="gallery-thumbs-section">
+                <h3>All Photos</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item active-thumb" onclick="goToSlide(0)"><div class="gallery-item-content">Photo 1</div></div>
+                    <div class="gallery-item" onclick="goToSlide(1)"><div class="gallery-item-content">Photo 2</div></div>
+                    <div class="gallery-item" onclick="goToSlide(2)"><div class="gallery-item-content">Photo 3</div></div>
+                    <div class="gallery-item" onclick="goToSlide(3)"><div class="gallery-item-content">Photo 4</div></div>
+                    <div class="gallery-item" onclick="goToSlide(4)"><div class="gallery-item-content">Photo 5</div></div>
+                    <div class="gallery-item" onclick="goToSlide(5)"><div class="gallery-item-content">Photo 6</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Form Page -->
+        <div id="form" class="page">
+            <h2>Registration Form</h2>
+            <form action="#" method="post">
+                <div>
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" required placeholder="Enter your full name">
+                </div>
+                <div>
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required placeholder="example@gmail.com">
+                </div>
+                <div>
+                    <label for="message">Additional Notes:</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Your message..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit Registration</button>
+            </form>
+        </div>
+
+        <!-- 7. Contact Page -->
+        <div id="contact" class="page">
+            <h2>Contact Us</h2>
+            <p>Get in touch with the GGHS Badminton Club team through our official channels:</p>
+
+            <div class="contact-list">
+                <div class="contact-item">
+                    <span><strong>Email:</strong> gghsbadmintonclub@gmail.com</span>
+                    <a href="mailto:gghsbadmintonclub@gmail.com" style="color: var(--primary-color); font-weight: 500;">Send Mail</a>
+                </div>
+
+                <div class="contact-item">
+                    <span><strong>Instagram:</strong> @gghsbadmintonclub</span>
+                    <a href="https://www.instagram.com/gghsbadmintonclub?igsh=MWI0c2sxbWI1YjRw&utm_source=qr" target="_blank" class="btn-social btn-instagram">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        Visit Instagram
+                    </a>
+                </div>
+
+                <div class="contact-item">
+                    <span><strong>Community:</strong> Join GGHS Discord</span>
+                    <a href="https://discord.gg/BCh2BHExx" target="_blank" class="btn-social btn-discord">
+                        <svg class="social-icon" viewBox="0 0 127.14 96.36">
+                            <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.91-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53C31,46,36.06,40.24,42.45,40.24,48.84,40.24,54,46,53.89,53,53.89,60,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53c0-7,5.05-12.75,11.44-12.75s11.44,5.75,11.44,12.75C96.13,60,91.08,65.69,84.69,65.69Z"/>
+                        </svg>
+                        Join Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GGHS Badminton Club. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Navigation & Gallery Slideshow logic -->
+    <script>
+        // Page Navigation Logic
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active-page'));
+
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active-page');
+            document.getElementById('nav-' + pageId).classList.add('active');
+        }
+
+        // Slideshow Logic
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const thumbs = document.querySelectorAll('.gallery-item');
+
+        function updateSlideDisplay() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active-slide', index === currentSlideIndex);
+            });
+            thumbs.forEach((thumb, index) => {
+                thumb.classList.toggle('active-thumb', index === currentSlideIndex);
+            });
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex = (currentSlideIndex + direction + slides.length) % slides.length;
+            updateSlideDisplay();
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            updateSlideDisplay();
+        }
+
+        // Auto Advance Slide every 5 seconds
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+    </script>
+
+</body>
+</html>
